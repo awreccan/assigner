@@ -1,5 +1,5 @@
 import React from 'react'
-import MuuriGridItem from './MuuriGridItem'
+import MuuriGridItem from '../../muuri/MuuriGridItem'
 import './Item.css'
 
 export default function Item(props) {

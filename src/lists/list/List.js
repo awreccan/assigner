@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import MuuriGridItem from './MuuriGridItem'
+import MuuriGridItem from '../muuri/MuuriGridItem'
 import Muuri from 'muuri'
-import Item from './Item'
+import Item from './item/Item'
 import './List.css'
 
 export default class List extends Component {

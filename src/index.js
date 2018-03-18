@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker'
 
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import reducer from './reducer'
+import reducer from './lists/Lists.reducer'
 
 import Muuri from 'muuri'
 

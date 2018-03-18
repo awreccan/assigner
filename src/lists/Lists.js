@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Muuri from 'muuri'
-import List from './List'
+import List from './list/List'
 
-class Assigner extends Component {
+class Lists extends Component {
   componentDidMount() {
     new Muuri('.lists.muuri-grid', {
       dragStartPredicate: {
@@ -16,7 +16,7 @@ class Assigner extends Component {
     const { lists = [] } = this.props
     return (
       <div>
-        <header>Assigner</header>
+        <header>Assigner: Assign Items to Different Lists</header>
         <div className='lists muuri-grid'>
           { lists.map((l, i) => (
             <List key={i} index={i} numItems={l.numItems}/>
@@ -31,4 +31,4 @@ function mapStateToProps({ lists }) {
   return { lists };
 }
 
-export default connect(mapStateToProps)(Assigner)
+export default connect(mapStateToProps)(Lists)

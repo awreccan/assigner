@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
-import Assigner from './Assigner.js'
+import Assigner from './lists/Lists.js'
 
 class App extends Component {
   render() {
