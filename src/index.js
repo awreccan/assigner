@@ -4,9 +4,12 @@ import './index.css'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
-import { createStore } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
-import reducer from './lists/Lists.reducer'
+import reducer, { initialState } from './lists/Assigner.reducer'
+
+import { logger } from 'redux-logger'
+
 
 import Muuri from 'muuri'
 
@@ -18,7 +21,13 @@ Muuri.defaultOptions = {
   itemClass: MUURI_DRAGGABLE_ITEM
 }
 
-const store = createStore(reducer)
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  reducer,
+  initialState,
+  composeEnhancers(applyMiddleware(logger))
+)
 
 ReactDOM.render(
 

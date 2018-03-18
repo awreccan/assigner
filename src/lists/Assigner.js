@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Muuri from 'muuri'
 import List from './list/List'
 
-class Lists extends Component {
+class Assigner extends Component {
   componentDidMount() {
     new Muuri('.lists.muuri-grid', {
       dragStartPredicate: {
@@ -31,4 +31,4 @@ function mapStateToProps({ lists }) {
   return { lists };
 }
 
-export default connect(mapStateToProps)(Lists)
+export default connect(mapStateToProps)(Assigner)

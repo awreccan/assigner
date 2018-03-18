@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { setItemsGrid } from './List.actions.js'
 import MuuriGridItem from '../muuri/MuuriGridItem'
 import Muuri from 'muuri'
 import Item from './item/Item'
 import './List.css'
 
-export default class List extends Component {
+class List extends Component {
   componentDidMount() {
-    new Muuri(`.list-${this.props.index} .items.muuri-grid`)
+    const { index, setItemsGrid } = this.props
+    const itemsGrid = new Muuri(`.list-${index} .items.muuri-grid`, {
+      dragSort: () => this.props.itemsGrids
+    })
+    setItemsGrid(itemsGrid, index)
   }
 
   render() {
@@ -23,3 +29,12 @@ export default class List extends Component {
     )
   }
 }
+
+export default connect(
+  function mapStateToProps({ lists }) {
+    return {
+      itemsGrids: lists.map(l => l.itemsGrid)
+    }
+  },
+  { setItemsGrid }
+)(List)

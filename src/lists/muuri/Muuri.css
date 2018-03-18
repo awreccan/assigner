@@ -1,4 +1,6 @@
 .muuri-grid {
+    /* to allow dragging back into an empty grid */
+    min-height: 10px;
     position: relative;
 }
 .MUURI-DRAGGABLE-ITEM {
