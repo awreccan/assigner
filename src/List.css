@@ -1,0 +1,32 @@
+.list {
+    /* to have 3 list per width */
+    width: 30%;
+    margin: 1.5%; /* space between lists */
+
+    border: solid 1px black;
+    background: lightgrey;
+}
+
+.list .drag-handle {
+    height: 2em;
+    background: yellow;
+    cursor: move;
+}
+
+.list .items.muuri-grid {
+    margin: 1em;
+}
+
+@media (max-width: 768px) {
+    .list {
+        width: 47.5%;
+        margin: 1%;
+    }
+}
+
+@media (max-width: 478px) {
+    .list {
+        width: 99%;
+        margin: 1% 0;
+    }
+}

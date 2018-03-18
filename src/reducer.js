@@ -1,11 +1,9 @@
-const initialState = [
-  {
-    cards: 2
-  }, {
-    cards: 3
-  }
+const lists = [
+  { numItems: 2 },
+  { numItems: 3 },
+  { numItems: 4 }
 ]
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = { lists }, action) {
   return state;
 }

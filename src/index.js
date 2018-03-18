@@ -8,6 +8,16 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducer'
 
+import Muuri from 'muuri'
+
+export const MUURI_DRAGGABLE_ITEM = 'MUURI-DRAGGABLE-ITEM'
+Muuri.defaultOptions = {
+  ...Muuri.defaultOptions,
+  dragSortInterval: 0,
+  dragEnabled: true,
+  itemClass: MUURI_DRAGGABLE_ITEM
+}
+
 const store = createStore(reducer)
 
 ReactDOM.render(

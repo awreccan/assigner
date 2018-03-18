@@ -1,0 +1,10 @@
+.item {
+    height: 10px;
+    width: 100%;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+    padding: 1em 0;
+    /* space between items */
+    margin: 2% 0;
+}
