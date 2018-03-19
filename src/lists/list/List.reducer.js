@@ -1,5 +1,6 @@
 export default function reducer(state = [], action) {
   switch (action.type) {
+
     case 'SET_ITEMS_GRID':
       const { itemsGrid, listIndex } = action
 

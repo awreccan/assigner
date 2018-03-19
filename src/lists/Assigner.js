@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Muuri from 'muuri'
 import List from './list/List'
+import { setListsGrid } from './Assigner.actions'
 
 class Assigner extends Component {
   componentDidMount() {
-    new Muuri('.lists.muuri-grid', {
+    const listsGrid = new Muuri('.lists.muuri-grid', {
       dragStartPredicate: {
         handle: `.list .drag-handle`
       }
     })
+    this.props.setListsGrid(listsGrid)
   }
 
   render() {
@@ -31,4 +33,4 @@ function mapStateToProps({ lists }) {
   return { lists };
 }
 
-export default connect(mapStateToProps)(Assigner)
+export default connect(mapStateToProps, { setListsGrid })(Assigner)
