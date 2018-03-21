@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Muuri from 'muuri'
 import List from './list/List'
-import { setListsGrid } from './muuri/list/ListsGrid.actions'
+import { setListsGrid, layoutListsGrid } from './muuri/list/ListsGrid.actions'
 
 class Assigner extends Component {
   componentDidMount() {
@@ -12,6 +12,9 @@ class Assigner extends Component {
       }
     })
     this.props.setListsGrid(listsGrid)
+
+    // setting listsGrid will initialise the itemsGrids, after which a layout is needed
+    setTimeout(() => this.props.layoutListsGrid(), 0)
   }
 
   render() {
@@ -33,4 +36,4 @@ function mapStateToProps({ lists }) {
   return { lists };
 }
 
-export default connect(mapStateToProps, { setListsGrid })(Assigner)
+export default connect(mapStateToProps, { setListsGrid, layoutListsGrid })(Assigner)

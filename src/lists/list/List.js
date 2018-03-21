@@ -8,23 +8,44 @@ import Item from './item/Item'
 import './List.css'
 
 class List extends Component {
-  componentDidMount() {
-    const { list, setItemsGrid } = this.props
-    const itemsGrid = new Muuri(`.list-${list.id} .items.muuri-grid`, {
-      dragSort: () => Object.values(this.props.itemsGrids)
-    })
-      .on('receive', () => setTimeout(() => this.props.layoutListsGrid(), 0))
-    setItemsGrid(itemsGrid, list.id)
+  componentWillReceiveProps(nextProps) {
+    const { itemsGrids } = nextProps
+    this.itemsGrids = itemsGrids
+  }
+
+  getItemsGrids() {
+    return this.itemsGrids && Object.values(this.itemsGrids)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.listsGrid && this.props.listsGrid) {
+      const { list, listsGrid, setItemsGrid } = this.props
+      const self = this
+      const itemsGrid = new Muuri(`.list-${list.id} .items.muuri-grid`, {
+        dragSort: () => self.getItemsGrids(),
+        dragContainer: listsGrid.getElement()
+      })
+        .on('dragInit', function (item) {
+          item.getElement().style.width = item.getWidth() + 'px';
+        })
+        .on('dragReleaseEnd', function (item) {
+          item.getElement().style.width = '';
+        })
+        .on('receive', () => setTimeout(() => this.props.layoutListsGrid(), 0))
+      setItemsGrid(itemsGrid, list.id)
+    }
   }
 
   render() {
-    const { items, list } = this.props
+    const { items, list, listsGrid } = this.props
     return (
       <MuuriGridItem className={`list list-${list.id}`}>
         <div className='drag-handle'>{list.name}</div>
-        <div className='items muuri-grid'>
-          { items.map(i => <Item key={i.id} item={i} />) }
-        </div>
+        { listsGrid && (
+          <div className='items muuri-grid'>
+            { items.map(i => <Item key={i.id} item={i} />) }
+          </div>
+        ) }
       </MuuriGridItem>
     )
   }
@@ -34,6 +55,7 @@ export default connect(
   function mapStateToProps({ humanFriendly, grids }, { list }) {
     return {
       items: humanFriendly.find(l => l.id === list.id).items,
+      listsGrid: grids.lists,
       itemsGrids: grids.items
     }
   },
