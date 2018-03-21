@@ -4,6 +4,6 @@ import './Item.css'
 
 export default function Item(props) {
   return (
-    <MuuriGridItem className='item'>Item { props.index }</MuuriGridItem>
+    <MuuriGridItem className={`item item-${props.item.id}`}>{ props.item.name }</MuuriGridItem>
   )
 }

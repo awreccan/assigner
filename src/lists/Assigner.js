@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Muuri from 'muuri'
 import List from './list/List'
-import { setListsGrid } from './Assigner.actions'
+import { setListsGrid } from './muuri/list/ListsGrid.actions'
 
 class Assigner extends Component {
   componentDidMount() {
@@ -15,13 +15,13 @@ class Assigner extends Component {
   }
 
   render() {
-    const { lists = [] } = this.props
+    const { lists = {} } = this.props
     return (
       <div>
         <header>Assigner: Assign Items to Different Lists</header>
         <div className='lists muuri-grid'>
-          { lists.map((l, i) => (
-            <List key={i} index={i} numItems={l.numItems}/>
+          { Object.values(lists).map(l => (
+            <List key={l.id} list={l} />
           ))}
         </div>
       </div>

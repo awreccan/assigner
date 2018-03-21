@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setItemsGrid } from './List.actions'
-import { layoutListsGrid } from '../Assigner.actions'
+import { setItemsGrid } from '../muuri/list/item/ItemsGrid.actions'
+import { layoutListsGrid } from '../muuri/list/ListsGrid.actions'
 import MuuriGridItem from '../muuri/MuuriGridItem'
 import Muuri from 'muuri'
 import Item from './item/Item'
@@ -9,23 +9,21 @@ import './List.css'
 
 class List extends Component {
   componentDidMount() {
-    const { index, setItemsGrid } = this.props
-    const itemsGrid = new Muuri(`.list-${index} .items.muuri-grid`, {
-      dragSort: () => this.props.itemsGrids
+    const { list, setItemsGrid } = this.props
+    const itemsGrid = new Muuri(`.list-${list.id} .items.muuri-grid`, {
+      dragSort: () => Object.values(this.props.itemsGrids)
     })
       .on('receive', () => setTimeout(() => this.props.layoutListsGrid(), 0))
-    setItemsGrid(itemsGrid, index)
+    setItemsGrid(itemsGrid, list.id)
   }
 
   render() {
-    const { numItems, index } = this.props
+    const { items, list } = this.props
     return (
-      <MuuriGridItem className={`list list-${index}`}>
-        <div className='drag-handle'/>
+      <MuuriGridItem className={`list list-${list.id}`}>
+        <div className='drag-handle'>{list.name}</div>
         <div className='items muuri-grid'>
-          {[ ...Array(numItems || 0).keys() ].map(n => (
-            <Item key={n} index={n} />
-          ))}
+          { items.map(i => <Item key={i.id} item={i} />) }
         </div>
       </MuuriGridItem>
     )
@@ -33,9 +31,10 @@ class List extends Component {
 }
 
 export default connect(
-  function mapStateToProps({ lists }) {
+  function mapStateToProps({ humanFriendly, grids }, { list }) {
     return {
-      itemsGrids: lists.map(l => l.itemsGrid)
+      items: humanFriendly.find(l => l.id === list.id).items,
+      itemsGrids: grids.items
     }
   },
   { setItemsGrid, layoutListsGrid }
