@@ -6,8 +6,9 @@ export function humanToReduxFriendlyState(arr) {
 
   arr.forEach(l => {
     lists[l.id] = omit(l, 'items')
-    l.items.forEach(i => {
+    l.items.forEach((i, index) => {
       items[i.id] = i
+      items[i.id].index = index
       items[i.id].list = l.id
     })
   })
@@ -24,11 +25,16 @@ export function humanToReduxFriendlyState(arr) {
 function reduxToHumanFriendlyState(obj) {
   const { lists, items, listOrder } = obj
   const array = []
+
+  // clone lists because we'll mutate each list by adding items to it
+  // before collating all lists in the output array
   const listsCopy = cloneDeep(lists)
   Object.values(listsCopy).forEach(l => l.items = [])
+
   Object.values(items).forEach(item => {
-    const parentList = listsCopy[item.list]
-    parentList.items.push({...item})
+    const { index, list, ...humanFriendlyItem } = item
+    const parentList = listsCopy[list]
+    parentList.items[index] = {...humanFriendlyItem}
   })
   listOrder.forEach(l => array.push( listsCopy[l] ))
   return array
@@ -44,14 +50,14 @@ function reduxToHumanFriendlyState(obj) {
 //     l4: { id: 'l4', name: 'List 4' }
 //   },
 //   items: {
-//     i1: { id: 'i1', name: 'Item 1', list: 'l1' },
-//     i2: { id: 'i2', name: 'Item 2', list: 'l1' } ,
-//     i3: { id: 'i3', name: 'Item 3', list: 'l2' },
-//     i4: { id: 'i4', name: 'Item 4', list: 'l2' },
-//     i5: { id: 'i5', name: 'Item 5', list: 'l3' },
-//     i6: { id: 'i6', name: 'Item 6', list: 'l3' } ,
-//     i7: { id: 'i7', name: 'Item 7', list: 'l4' },
-//     i8: { id: 'i8', name: 'Item 8', list: 'l4' }
+//     i1: { id: 'i1', name: 'Item 1', list: 'l1', index: 1 },
+//     i2: { id: 'i2', name: 'Item 2', list: 'l1', index: 2 } ,
+//     i3: { id: 'i3', name: 'Item 3', list: 'l2', index: 1 },
+//     i4: { id: 'i4', name: 'Item 4', list: 'l2', index: 2 },
+//     i5: { id: 'i5', name: 'Item 5', list: 'l3', index: 1 },
+//     i6: { id: 'i6', name: 'Item 6', list: 'l3', index: 2 } ,
+//     i7: { id: 'i7', name: 'Item 7', list: 'l4', index: 1 },
+//     i8: { id: 'i8', name: 'Item 8', list: 'l4', index: 2 }
 //   },
 //   listOrder: [ 'l2', 'l4', 'l3', 'l1' ]
 // }
