@@ -6,15 +6,19 @@ import { setListsGrid, layoutListsGrid } from './muuri/list/ListsGrid.actions'
 
 class Assigner extends Component {
   componentDidMount() {
-    const listsGrid = new Muuri('.lists.muuri-grid', {
+    this.listsGrid = new Muuri('.lists.muuri-grid', {
       dragStartPredicate: {
         handle: `.list .drag-handle`
       }
     })
-    this.props.setListsGrid(listsGrid)
+    this.props.setListsGrid(this.listsGrid)
 
     // setting listsGrid will initialise the itemsGrids, after which a layout is needed
     setTimeout(() => this.props.layoutListsGrid(), 0)
+  }
+
+  componentWillUnmount() {
+    this.listsGrid.destroy()
   }
 
   render() {

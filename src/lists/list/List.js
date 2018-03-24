@@ -21,7 +21,7 @@ class List extends Component {
     if (!prevProps.listsGrid && this.props.listsGrid) {
       const { list, listsGrid, setItemsGrid } = this.props
       const self = this
-      const itemsGrid = new Muuri(`.list-${list.id} .items.muuri-grid`, {
+      this.muuriGridOfItems = new Muuri(`.list-${list.id} .items.muuri-grid`, {
         dragSort: () => self.getItemsGrids(),
         dragContainer: listsGrid.getElement()
       })
@@ -32,8 +32,12 @@ class List extends Component {
           item.getElement().style.width = '';
         })
         .on('receive', () => setTimeout(() => this.props.layoutListsGrid(), 0))
-      setItemsGrid(itemsGrid, list.id)
+      setItemsGrid(this.muuriGridOfItems, list.id)
     }
+  }
+
+  componentWillUnmount() {
+    this.muuriGridOfItems.destroy()
   }
 
   render() {
