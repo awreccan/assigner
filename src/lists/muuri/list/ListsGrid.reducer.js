@@ -1,11 +1,13 @@
+import { SET_LISTS_GRID, LAYOUT_LISTS_GRID } from '../../../state/actions'
+
 export default function reducer(state = null, action) {
   switch(action.type) {
 
-    case 'SET_LISTS_GRID':
+    case SET_LISTS_GRID:
       const { listsGrid } = action
       return listsGrid
 
-    case 'LAYOUT_LISTS_GRID':
+    case LAYOUT_LISTS_GRID:
       state && state.refreshItems().layout()
       return state;
 

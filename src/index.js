@@ -4,6 +4,7 @@ import './index.css'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
+import Demo from './Demo'
 import { Provider } from 'react-redux'
 import { initStore } from './state/init'
 import reducer from './lists/Assigner.reducer'
@@ -20,9 +21,11 @@ Muuri.defaultOptions = {
 
 ReactDOM.render(
 
-  <Provider store={initStore(reducer)}>
-    <App />
-  </Provider>,
+  <Demo dev={false}>
+    <Provider store={initStore(reducer)}>
+      <App />
+    </Provider>
+  </Demo>,
 
   document.getElementById('root')
 )

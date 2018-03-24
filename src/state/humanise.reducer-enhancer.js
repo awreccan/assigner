@@ -1,4 +1,5 @@
 import { omit, cloneDeep } from 'lodash'
+import { UPDATE_HUMAN_FRIENDLY_STATE } from './actions'
 
 export function humanToReduxFriendlyState(arr) {
   let lists = {}, items = {}
@@ -57,7 +58,7 @@ function reduxToHumanFriendlyState(obj) {
 
 export function humanFriendlyReducer(state = {}, action) {
   switch (action.type) {
-    case 'UPDATE_HUMAN_FRIENDLY_STATE':
+    case UPDATE_HUMAN_FRIENDLY_STATE:
       return {
         ...state,
         humanFriendly: reduxToHumanFriendlyState(state)
@@ -69,7 +70,7 @@ export function humanFriendlyReducer(state = {}, action) {
 
 const humaniseReducer = reducer => (state, action) => {
   const nextState = reducer(state, action)
-  return humanFriendlyReducer(nextState, { type: 'UPDATE_HUMAN_FRIENDLY_STATE' })
+  return humanFriendlyReducer(nextState, { type: UPDATE_HUMAN_FRIENDLY_STATE })
 }
 
 export default humaniseReducer
