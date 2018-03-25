@@ -18,12 +18,12 @@ export function initStore(reducer) {
     composeEnhancers(applyMiddleware(replaceableMiddleware))
   )
 
-  const pulse = () => setTimeout(() => {
-    store.dispatch({ type: 'REDUX_LOGGER_TEST' })
-    pulse()
-  }, 1000)
-
-  pulse()
+  // const pulse = () => setTimeout(() => {
+  //   store.dispatch({ type: 'REDUX_LOGGER_TEST' })
+  //   pulse()
+  // }, 1000)
+  //
+  // pulse()
 
   return store
 }

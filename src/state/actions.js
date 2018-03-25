@@ -2,6 +2,8 @@ export const SET_LISTS_GRID = 'SET_LISTS_GRID'
 export const LAYOUT_LISTS_GRID = 'LAYOUT_LISTS_GRID'
 export const SET_ITEMS_GRID = 'SET_ITEMS_GRID'
 export const UPDATE_HUMAN_FRIENDLY_STATE = 'UPDATE_HUMAN_FRIENDLY_STATE'
+export const DRAG_ITEM = 'DRAG_ITEM'
+export const DROP_ITEM = 'DROP_ITEM'
 
 export const neverLogThese = [
   UPDATE_HUMAN_FRIENDLY_STATE
