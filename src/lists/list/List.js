@@ -8,6 +8,7 @@ import MuuriGridItem from '../muuri/MuuriGridItem'
 import Muuri from 'muuri'
 import Item from './item/Item'
 import './List.css'
+import { MUURI_DRAGGABLE_ITEM } from '../..'
 
 class List extends Component {
   componentWillReceiveProps(nextProps) {
@@ -42,6 +43,10 @@ class List extends Component {
           const toIndex = this.muuriGridOfItems.getItems().indexOf(item)
           const toList = list.id
           dropItem(toList, toIndex) // causes React to render a new (undraggable) node for the dropped item
+          const reduxRenderedItem = document.querySelector(`.item:not(.${MUURI_DRAGGABLE_ITEM})`)
+          this.muuriGridOfItems.add(reduxRenderedItem, {
+            index: toIndex
+          })
         })
         .on('receive', () => setTimeout(() => this.props.layoutListsGrid(), 0))
       setItemsGrid(this.muuriGridOfItems, list.id)
