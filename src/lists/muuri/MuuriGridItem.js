@@ -7,8 +7,9 @@ export default class MuuriGridItem extends Component {
   }
 
   render() {
+    const { setRef, ...cleanProps } = this.props
     return (
-      <div {...this.props} ref={r => this.setRef(r)}>
+      <div {...cleanProps} ref={r => this.setRef(r)}>
         <div className='muuri-item-content'>
           { this.props.children }
         </div>
