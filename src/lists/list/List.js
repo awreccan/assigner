@@ -8,7 +8,6 @@ import MuuriGridItem from '../muuri/MuuriGridItem'
 import Muuri from 'muuri'
 import Item from './item/Item'
 import './List.css'
-import { MUURI_DRAGGABLE_ITEM } from '../..'
 
 class List extends Component {
   componentWillReceiveProps(nextProps) {
@@ -46,8 +45,7 @@ class List extends Component {
           this.muuriGridOfItems.remove(toIndex, {
             removeElements: true
           })
-          const reduxRenderedItem = document.querySelector(`.item:not(.${MUURI_DRAGGABLE_ITEM})`)
-          this.muuriGridOfItems.add(reduxRenderedItem, {
+          this.muuriGridOfItems.add(this.itemRefs[toIndex], {
             index: toIndex
           })
         })
