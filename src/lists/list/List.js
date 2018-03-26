@@ -43,6 +43,9 @@ class List extends Component {
           const toIndex = this.muuriGridOfItems.getItems().indexOf(item)
           const toList = list.id
           dropItem(toList, toIndex) // causes React to render a new (undraggable) node for the dropped item
+          this.muuriGridOfItems.remove(toIndex, {
+            removeElements: true
+          })
           const reduxRenderedItem = document.querySelector(`.item:not(.${MUURI_DRAGGABLE_ITEM})`)
           this.muuriGridOfItems.add(reduxRenderedItem, {
             index: toIndex
