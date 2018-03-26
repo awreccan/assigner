@@ -70,6 +70,9 @@ class List extends Component {
 
   render() {
     const { items, list, listsGrid } = this.props
+
+    if (listsGrid) { this.itemRefs = {} }
+
     return (
       <MuuriGridItem className={`list list-${list.id}`}>
 
@@ -77,7 +80,9 @@ class List extends Component {
 
         { listsGrid && <div className='items muuri-grid'>
 
-            { items.map(i => <Item key={i.id} item={i} />) }
+            { items.map((i, index) =>
+              <Item key={i.id} item={i} setRef={r => this.itemRefs[index] = r} />
+            ) }
 
         </div> }
 
