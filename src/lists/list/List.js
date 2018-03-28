@@ -40,20 +40,20 @@ class List extends Component {
         })
         .on('dragReleaseEnd', item => {
           item.getElement().style.width = '';
-          const toIndex = this.muuriGridOfItems.getItems().indexOf(item)
+          this.toIndex = this.muuriGridOfItems.getItems().indexOf(item)
           const toList = list.id
-          dropItem(toList, toIndex) // causes React to render a new (undraggable) node for the dropped item
+          dropItem(toList, this.toIndex) // causes React to render a new (undraggable) node for the dropped item
         })
         .on('receive', () => setTimeout(() => this.props.layoutListsGrid(), 0))
       setItemsGrid(this.muuriGridOfItems, list.id)
     }
 
     if (prevProps.itemBeingDragged && !itemBeingDragged) {
-      this.muuriGridOfItems.remove(toIndex, {
+      this.muuriGridOfItems.remove(this.toIndex, {
         removeElements: true
       })
-      this.muuriGridOfItems.add(this.itemRefs[toIndex], {
-        index: toIndex
+      this.muuriGridOfItems.add(this.itemRefs[this.toIndex], {
+        index: this.toIndex
       })
     }
   }
@@ -105,11 +105,12 @@ function ListHeader(props) {
 }
 
 export default connect(
-  function mapStateToProps({ humanFriendly: lists, grids }, { list }) {
+  function mapStateToProps({ humanFriendly: lists, items, grids }, { list }) {
     return {
       items: lists.find(l => l.id === list.id).items.filter(i => !i.dragging),
       listsGrid: grids.lists,
-      itemsGrids: grids.items
+      itemsGrids: grids.items,
+      itemBeingDragged: Object.values(items).find(i => i.dragging)
     }
   },
   { setItemsGrid, layoutListsGrid, dragItem, dropItem, renameList }
