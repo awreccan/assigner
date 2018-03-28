@@ -44,6 +44,7 @@ class List extends Component {
           item.getElement().style.width = '';
           this.toIndex = this.muuriGridOfItems.getItems().indexOf(item)
           const toList = list.id
+          this.dropped = true
           dropItem(toList, this.toIndex) // causes React to render a new (undraggable) node for the dropped item
         })
         .on('receive', () => setTimeout(() => this.props.layoutListsGrid(), 0))
@@ -51,7 +52,7 @@ class List extends Component {
     }
 
     if (prevProps.itemBeingDragged && !itemBeingDragged) {
-      if (this.toIndex > -1) {
+      if (this.dropped && this.toIndex > -1) {
         this.muuriGridOfItems.remove(this.toIndex, {
           removeElements: true
         })
@@ -59,6 +60,7 @@ class List extends Component {
           index: this.toIndex
         })
       }
+      this.dropped = false
     }
   }
 
