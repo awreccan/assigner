@@ -15,7 +15,7 @@ class Item extends Component {
 
   render () {
     return (
-      <MuuriGridItem className={`item item-${this.props.item.id}`}>
+      <MuuriGridItem className={`item item-${this.props.item.id}`} setRef={r => this.props.setRef(r)}>
         <span className='item-name' onClick={this.rename}>
           {this.props.item.name}
         </span>

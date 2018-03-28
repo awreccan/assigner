@@ -42,6 +42,12 @@ class List extends Component {
           const toIndex = this.muuriGridOfItems.getItems().indexOf(item)
           const toList = list.id
           dropItem(toList, toIndex) // causes React to render a new (undraggable) node for the dropped item
+          this.muuriGridOfItems.remove(toIndex, {
+            removeElements: true
+          })
+          this.muuriGridOfItems.add(this.itemRefs[toIndex], {
+            index: toIndex
+          })
         })
         .on('receive', () => setTimeout(() => this.props.layoutListsGrid(), 0))
       setItemsGrid(this.muuriGridOfItems, list.id)
@@ -62,6 +68,9 @@ class List extends Component {
 
   render() {
     const { items, list, listsGrid } = this.props
+
+    if (listsGrid) { this.itemRefs = {} }
+
     return (
       <MuuriGridItem className={`list list-${list.id}`}>
 
@@ -69,7 +78,9 @@ class List extends Component {
 
         { listsGrid && <div className='items muuri-grid'>
 
-            { items.map(i => <Item key={i.id} item={i} />) }
+            { items.map((i, index) =>
+              <Item key={i.id} item={i} setRef={r => this.itemRefs[index] = r} />
+            ) }
 
         </div> }
 
