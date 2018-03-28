@@ -8,6 +8,7 @@ import MuuriGridItem from '../muuri/MuuriGridItem'
 import Muuri from 'muuri'
 import Item from './item/Item'
 import './List.css'
+import Menu from '../menu/Menu'
 
 class List extends Component {
   componentWillReceiveProps(nextProps) {
@@ -99,7 +100,7 @@ class List extends Component {
     return (
       <MuuriGridItem className={`list list-${list.id}`}>
 
-        <ListHeader listName={list.name} rename={this.rename} />
+        <ListHeader list={list} rename={this.rename} />
 
         { listsGrid && <div className='items muuri-grid'>
 
@@ -115,12 +116,16 @@ class List extends Component {
 }
 
 function ListHeader(props) {
-  const { listName, rename } = props
+  const { list, rename } = props
   return (
     <div className='drag-handle'>
+
       <span className='list-name' onClick={rename}>
-        {listName}
+        {list.name} ({list.type})
       </span>
+
+      <Menu type={list.type} />
+
     </div>
   )
 }

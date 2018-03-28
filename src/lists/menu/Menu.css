@@ -1,0 +1,33 @@
+.dropdown {
+    float: right;
+    position: relative;
+
+    z-index: 3; /* lift the menu above the items */
+}
+
+.dropdown__trigger {
+    cursor: context-menu;
+}
+
+.dropdown__content {
+    min-width: 7em;
+    cursor: pointer;
+    background: white;
+    border-radius: 0.3em;
+    box-shadow: 5px 4px 1px 4px #00000030;
+    left: -1em;
+}
+
+.dropdown__content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dropdown__content ul li {
+    text-align: left;
+    padding: 1em;
+}
+
+.dropdown__content ul li:hover {
+    background: lightgrey;
+}
