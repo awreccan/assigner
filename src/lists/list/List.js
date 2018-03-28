@@ -19,6 +19,8 @@ class List extends Component {
     return this.itemsGrids && Object.values(this.itemsGrids)
   }
 
+  toIndex = -1
+
   componentDidUpdate(prevProps) {
     const { list, listsGrid, setItemsGrid, dragItem, dropItem, itemBeingDragged } = this.props
 
@@ -49,12 +51,14 @@ class List extends Component {
     }
 
     if (prevProps.itemBeingDragged && !itemBeingDragged) {
-      this.muuriGridOfItems.remove(this.toIndex, {
-        removeElements: true
-      })
-      this.muuriGridOfItems.add(this.itemRefs[this.toIndex], {
-        index: this.toIndex
-      })
+      if (this.toIndex > -1) {
+        this.muuriGridOfItems.remove(this.toIndex, {
+          removeElements: true
+        })
+        this.muuriGridOfItems.add(this.itemRefs[ this.toIndex ], {
+          index: this.toIndex
+        })
+      }
     }
   }
 
