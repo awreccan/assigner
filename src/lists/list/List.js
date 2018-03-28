@@ -20,8 +20,9 @@ class List extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.listsGrid && this.props.listsGrid) {
-      const { list, listsGrid, setItemsGrid, dragItem, dropItem } = this.props
+    const { list, listsGrid, setItemsGrid, dragItem, dropItem, itemBeingDragged } = this.props
+
+    if (!prevProps.listsGrid && listsGrid) {
       const self = this
       this.muuriGridOfItems = new Muuri(`.list-${list.id} .items.muuri-grid`, {
         dragSort: () => self.getItemsGrids(),
@@ -42,15 +43,18 @@ class List extends Component {
           const toIndex = this.muuriGridOfItems.getItems().indexOf(item)
           const toList = list.id
           dropItem(toList, toIndex) // causes React to render a new (undraggable) node for the dropped item
-          this.muuriGridOfItems.remove(toIndex, {
-            removeElements: true
-          })
-          this.muuriGridOfItems.add(this.itemRefs[toIndex], {
-            index: toIndex
-          })
         })
         .on('receive', () => setTimeout(() => this.props.layoutListsGrid(), 0))
       setItemsGrid(this.muuriGridOfItems, list.id)
+    }
+
+    if (prevProps.itemBeingDragged && !itemBeingDragged) {
+      this.muuriGridOfItems.remove(toIndex, {
+        removeElements: true
+      })
+      this.muuriGridOfItems.add(this.itemRefs[toIndex], {
+        index: toIndex
+      })
     }
   }
 
