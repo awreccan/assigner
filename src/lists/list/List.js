@@ -98,7 +98,7 @@ class List extends Component {
     if (listsGrid) { this.itemRefs = {} }
 
     return (
-      <MuuriGridItem className={`list list-${list.id}`}>
+      <MuuriGridItem className={`list list-${list.id}${list.menuOpen ? ' stack-higher' : ''}`}>
 
         <ListHeader list={list} rename={this.rename} />
 
