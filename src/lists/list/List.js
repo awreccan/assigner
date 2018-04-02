@@ -92,13 +92,34 @@ class List extends Component {
     }
   }
 
+  updateStackingClassWithoutOverwritingMuuriClasses(nextProps) {
+    // since Muuri and React both write to the classList,
+    // we can't let React control it solely and overwrite Muuri's classes
+
+    if (this.listRef) {
+      const {list: {menuOpen}} = nextProps, {classList} = this.listRef;
+
+      if (menuOpen) {
+        classList.add('stack-higher')
+      } else {
+        classList.remove('stack-higher')
+      }
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    this.updateStackingClassWithoutOverwritingMuuriClasses(nextProps);
+  }
+
   render() {
     const { items, list, listsGrid } = this.props
 
     if (listsGrid) { this.itemRefs = {} }
 
     return (
-      <MuuriGridItem className={`list list-${list.id}`}>
+      <MuuriGridItem
+        className={`list list-${list.id}`}
+        setRef={r => r && (this.listRef = r)}>
 
         <ListHeader list={list} rename={this.rename} />
 
@@ -124,7 +145,7 @@ function ListHeader(props) {
         {list.name} ({list.type})
       </span>
 
-      <Menu type={list.type} />
+      <Menu list={list} />
 
     </div>
   )
