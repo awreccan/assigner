@@ -24,11 +24,11 @@ class Menu extends Component {
     }
   }
 
-  onShow() {
+  onShow = () => {
     this.props.showMenu(this.props.list.id)
   }
 
-  onHide() {
+  onHide = () => {
     this.props.hideMenu(this.props.list.id)
   }
 
