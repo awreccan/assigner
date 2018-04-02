@@ -124,7 +124,7 @@ function ListHeader(props) {
         {list.name} ({list.type})
       </span>
 
-      <Menu type={list.type} />
+      <Menu list={list} />
 
     </div>
   )
