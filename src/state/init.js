@@ -2,7 +2,8 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { lists } from '../mocks/4-lists-8-items'
 import { createLogger } from 'redux-logger'
 import humaniseReducer, { humanToReduxFriendlyState } from './humanise.reducer-enhancer'
-import { neverLogThese, logTheseInDev } from './actions'
+import * as neverLogTheseActions from './actions/infra'
+import * as logTheseActionsOnlyInDev from './actions/dev'
 
 import ReplaceableMiddleware from 'redux-replaceable-middleware'
 export const replaceableMiddleware = ReplaceableMiddleware();
@@ -37,12 +38,15 @@ export function installDevLogger() {
 }
 
 const demoLogger = createLogger({
-  predicate: (_, action) => ![].concat(neverLogThese, logTheseInDev).includes(action.type),
+  predicate: (_, action) => ![].concat(
+    Object.keys(neverLogTheseActions),
+    Object.keys(logTheseActionsOnlyInDev)
+  ).includes(action.type),
   stateTransformer: state => state.humanFriendly,
   diff: true
 })
 
 const devLogger = createLogger({
-  predicate: (_, action) => !neverLogThese.includes(action.type),
+  predicate: (_, action) => !Object.keys(neverLogTheseActions).includes(action.type),
   // stateTransformer: state => state.humanFriendly,
 })
