@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setItemsGrid } from '../muuri/list/item/ItemsGrid.actions'
 import { dragItem, dropItem } from './item/Item.actions'
+import { renameList } from './List.actions'
 import { layoutListsGrid } from '../muuri/list/ListsGrid.actions'
 import MuuriGridItem from '../muuri/MuuriGridItem'
 import Muuri from 'muuri'
@@ -47,19 +48,41 @@ class List extends Component {
     this.muuriGridOfItems.destroy()
   }
 
+  rename = () => {
+    const { list, renameList } = this.props
+    const newName = prompt('Enter a new list name', list.name)
+    if (newName && newName !== list.name) {
+      renameList(list.id, newName)
+    }
+  }
+
   render() {
     const { items, list, listsGrid } = this.props
     return (
       <MuuriGridItem className={`list list-${list.id}`}>
-        <div className='drag-handle'>{list.name}</div>
-        { listsGrid && (
-          <div className='items muuri-grid'>
+
+        <ListHeader listName={list.name} rename={this.rename} />
+
+        { listsGrid && <div className='items muuri-grid'>
+
             { items.map(i => <Item key={i.id} item={i} />) }
-          </div>
-        ) }
+
+        </div> }
+
       </MuuriGridItem>
     )
   }
+}
+
+function ListHeader(props) {
+  const { listName, rename } = props
+  return (
+    <div className='drag-handle'>
+      <span className='list-name' onClick={rename}>
+        {listName}
+      </span>
+    </div>
+  )
 }
 
 export default connect(
@@ -70,5 +93,5 @@ export default connect(
       itemsGrids: grids.items
     }
   },
-  { setItemsGrid, layoutListsGrid }
+  { setItemsGrid, layoutListsGrid, dragItem, dropItem, renameList }
 )(List)

@@ -4,6 +4,7 @@ export const SET_ITEMS_GRID = 'SET_ITEMS_GRID'
 export const UPDATE_HUMAN_FRIENDLY_STATE = 'UPDATE_HUMAN_FRIENDLY_STATE'
 export const DRAG_ITEM = 'DRAG_ITEM'
 export const DROP_ITEM = 'DROP_ITEM'
+export const RENAME_LIST = 'RENAME_LIST'
 
 export const neverLogThese = [
   UPDATE_HUMAN_FRIENDLY_STATE

@@ -17,6 +17,10 @@
     margin: 1em;
 }
 
+.list .list-name {
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     .list {
         width: 47.5%;
