@@ -2,11 +2,19 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { lists } from '../mocks/4-lists-8-items'
 import { createLogger } from 'redux-logger'
 import humaniseReducer, { humanToReduxFriendlyState } from './humanise.reducer-enhancer'
+import * as socketActions from './actions/socket'
 import * as neverLogTheseActions from './actions/infra'
 import * as logTheseActionsOnlyInDev from './actions/dev'
 
+import createSocketIoMiddleware from 'redux-socket.io'
+import io from 'socket.io-client'
+
 import ReplaceableMiddleware from 'redux-replaceable-middleware'
 export const replaceableMiddleware = ReplaceableMiddleware();
+
+let socket = io('http://localhost:8000')
+let socketIoMiddleware = createSocketIoMiddleware(socket,
+    type => Object.keys(socketActions).includes(type.split('clientToServer/')[1]));
 
 export function initStore(reducer) {
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -16,7 +24,7 @@ export function initStore(reducer) {
   const store = createStore(
     humaniseReducer(reducer),
     initialState,
-    composeEnhancers(applyMiddleware(replaceableMiddleware))
+    composeEnhancers(applyMiddleware(socketIoMiddleware, replaceableMiddleware))
   )
 
   // const pulse = () => setTimeout(() => {

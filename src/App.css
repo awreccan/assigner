@@ -12,10 +12,19 @@
   height: 150px;
   padding: 20px;
   color: white;
+  transition: background-color 500ms linear;
+}
+
+.App.server-updated .App-header {
+  background-color: green;
 }
 
 .App-title {
   font-size: 1.5em;
+}
+
+.App-subtitle {
+  font-size: 1em;
 }
 
 .App-intro {

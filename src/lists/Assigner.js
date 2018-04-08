@@ -24,13 +24,10 @@ class Assigner extends Component {
   render() {
     const { lists = {} } = this.props
     return (
-      <div>
-        <header>Assigner: Assign Items to Different Lists</header>
-        <div className='lists muuri-grid'>
-          { Object.values(lists).map(l => (
-            <List key={l.id} list={l} />
-          ))}
-        </div>
+      <div className='lists muuri-grid'>
+        { Object.values(lists).map(l => (
+          <List key={l.id} list={l} />
+        ))}
       </div>
     )
   }
