@@ -5,7 +5,8 @@ export default function reducer(items = {}, action) {
   switch (action.type) {
 
     // Applies a `dragging` tag on the item being dragged
-    case DRAG_ITEM:
+    case 'clientToServer/' + DRAG_ITEM:
+    case 'serverToClient/' + DRAG_ITEM:
       const { fromList, fromIndex } = action
 
       const draggedItemId = Object.values(items)
@@ -21,7 +22,8 @@ export default function reducer(items = {}, action) {
       }
 
     // Changes indices of affected items
-    case DROP_ITEM:
+    case 'clientToServer/' + DROP_ITEM:
+    case 'serverToClient/' + DROP_ITEM:
       const { toList, toIndex } = action
 
       const droppedItem = Object.values(items).find(i => i.dragging)

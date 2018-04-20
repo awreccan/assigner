@@ -2,7 +2,7 @@ import { DRAG_ITEM, DROP_ITEM, RENAME_ITEM } from '../../../state/actions'
 
 export function dragItem(fromList, fromIndex) {
   return {
-    type: DRAG_ITEM,
+    type: 'clientToServer/' + DRAG_ITEM,
     fromList,
     fromIndex
   }
@@ -10,7 +10,7 @@ export function dragItem(fromList, fromIndex) {
 
 export function dropItem(toList, toIndex) {
   return {
-    type: DROP_ITEM,
+    type: 'clientToServer/' + DROP_ITEM,
     toList,
     toIndex
   }
