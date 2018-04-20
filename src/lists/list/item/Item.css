@@ -3,8 +3,16 @@
     width: 100%;
     border-radius: 5px;
     background: white;
-    cursor: pointer;
+    cursor: move;
     padding: 1em 0;
     /* space between items */
     margin: 0.3em 0;
+}
+
+.item .item-name {
+    cursor: text;
+}
+
+.item:hover {
+    box-shadow: 0 0 3px 3px skyblue;
 }

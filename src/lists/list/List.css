@@ -13,12 +13,16 @@
     cursor: move;
 }
 
+.list .drag-handle:hover {
+    box-shadow: 0 0 3px 3px skyblue;
+}
+
 .list .items.muuri-grid {
     margin: 1em;
 }
 
 .list .list-name {
-    cursor: pointer;
+    cursor: text;
 }
 
 @media (max-width: 768px) {
