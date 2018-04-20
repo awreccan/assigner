@@ -1,4 +1,4 @@
-import { DRAG_ITEM, DROP_ITEM } from '../../../state/actions'
+import { DRAG_ITEM, DROP_ITEM, RENAME_ITEM } from '../../../state/actions'
 
 export function dragItem(fromList, fromIndex) {
   return {
@@ -13,5 +13,13 @@ export function dropItem(toList, toIndex) {
     type: DROP_ITEM,
     toList,
     toIndex
+  }
+}
+
+export function renameItem(itemId, name) {
+  return {
+    type: 'clientToServer/' + RENAME_ITEM,
+    itemId,
+    name
   }
 }

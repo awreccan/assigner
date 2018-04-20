@@ -1,4 +1,4 @@
-import { DRAG_ITEM, DROP_ITEM } from '../../../state/actions'
+import { DRAG_ITEM, DROP_ITEM, RENAME_ITEM } from '../../../state/actions'
 import _ from 'lodash'
 
 export default function reducer(items = {}, action) {
@@ -36,6 +36,17 @@ export default function reducer(items = {}, action) {
           list: toList,
           index: toIndex,
           dragging: false
+        }
+      }
+
+    case 'clientToServer/' + RENAME_ITEM:
+    case 'serverToClient/' + RENAME_ITEM:
+      const { itemId, name } = action
+      return {
+        ...items,
+        [itemId]: {
+          ...items[itemId],
+          name
         }
       }
 

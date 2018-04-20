@@ -25,7 +25,11 @@ class List extends Component {
       const self = this
       this.muuriGridOfItems = new Muuri(`.list-${list.id} .items.muuri-grid`, {
         dragSort: () => self.getItemsGrids(),
-        dragContainer: listsGrid.getElement()
+        dragContainer: listsGrid.getElement(),
+        dragStartPredicate: function (item, event) {
+          if (event.target.classList.contains('item-name')) { return false; }
+          return Muuri.ItemDrag.defaultStartPredicate(item, event, {distance: 0, delay: 0, handle: false});
+        }
       })
         .on('dragInit', item => {
           item.getElement().style.width = item.getWidth() + 'px';
