@@ -38,6 +38,7 @@ class List extends Component {
           item.getElement().style.width = item.getWidth() + 'px';
           const fromIndex = this.muuriGridOfItems.getItems().indexOf(item)
           const fromList = list.id
+          this.dragged = true
           dragItem(fromList, fromIndex)
         })
         .on('dragReleaseEnd', item => {
@@ -51,16 +52,30 @@ class List extends Component {
       setItemsGrid(this.muuriGridOfItems, list.id)
     }
 
-    if (prevProps.itemBeingDragged && !itemBeingDragged) {
+    if (!prevProps.itemBeingDragged && itemBeingDragged && itemBeingDragged.list === this.props.list.id && !this.dragged) { // on drag
+      if (this.dragged) { // on this client
+        this.muuriGridOfItems.refreshItems().layout()
+        this.dragged = false
+      } else { // on other clients
+        this.muuriGridOfItems.remove(itemBeingDragged.index)
+        this.props.layoutListsGrid()
+      }
+    }
+
+    if (prevProps.itemBeingDragged && !itemBeingDragged) { // on drop
       if (this.dropped && this.toIndex > -1) {
         this.muuriGridOfItems.remove(this.toIndex, {
           removeElements: true
         })
-        this.muuriGridOfItems.add(this.itemRefs[ this.toIndex ], {
-          index: this.toIndex
-        })
       }
-      this.dropped = false
+      const indexOfDroppedItemInTargetList = this.props.items.map(i => i.id).findIndex(i => i === prevProps.itemBeingDragged.id)
+      if (indexOfDroppedItemInTargetList > -1) {
+        this.muuriGridOfItems.add(this.itemRefs[indexOfDroppedItemInTargetList], {
+          index: indexOfDroppedItemInTargetList
+        })
+        this.props.layoutListsGrid()
+        this.dropped = false
+      }
     }
   }
 
